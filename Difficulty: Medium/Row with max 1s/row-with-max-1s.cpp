@@ -1,25 +1,37 @@
-// User function template for C++
-class Solution {
-  public:
-    int rowWithMax1s(vector<vector<int>> &mat) {
-        
-    long long  n = mat.size();
-    int  m = mat[0].size();
-    int ans = -1;
-    int mcnt = 0;
-
-    for(int i=0;i<n;i++){
-        int cnt = 0;
-        for(int j=0;j<m;j++){
-            if(mat[i][j]==1){
-                cnt++;
-            }
-            if (mcnt < cnt){
-                mcnt = cnt;
-                ans = i;
+class Solution
+{
+public:
+    int lowerBound(vector<int> &nums, int x)
+    {
+        for (int i = 0; i < nums.size(); i++)
+        {
+            if (nums[i] >= x)
+            {
+                return i;
             }
         }
+        return nums.size();
     }
-    return ans;
-  }
+
+    int rowWithMax1s(vector<vector<int>> &mat)
+    {
+        int cntm = -1;
+        int idx = -1;
+
+        for (int i = 0; i < mat.size(); i++)
+        {
+            int cnt = mat[0].size() - lowerBound(mat[i], 1);
+            if (cnt > cntm)
+            {
+                cntm = cnt;
+                idx = i;
+            }
+        }
+        
+        if (cntm == 0) {
+            return -1;
+        }
+        
+        return idx;
+    }
 };
